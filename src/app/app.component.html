@@ -13,10 +13,19 @@
         <th>Date de naissance</th>
         <th></th>
       </tr>
-      <tr *ngFor="let user of users">
+      <tr *ngFor="let user of users; let i = index">
         <td>{{user.login}}</td>
         <td>{{user.password}}</td>
         <td>{{user.birthday | dateCh}}</td>
+        <td>
+
+          <button mat-icon-button (click)="editUser(i, user)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteUser(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
       </tr>
     </table>
   </div>
@@ -30,13 +39,18 @@
     <div class="form-group">
       <mat-form-field appearance="fill">
         <mat-label>Mot de passe</mat-label>
-        <input type="password" [(ngModel)]="currentUser.password" matInput placeholder="Mot de passe">
+        <!-- <input type="{{isPasswordDisplayed ? 'text' : 'password'}}"  [(ngModel)]="currentUser.password" matInput placeholder="Mot de passe"> -->
+        <input type="text" *ngIf="isPasswordDisplayed" [(ngModel)]="currentUser.password" matInput placeholder="Mot de passe">
+        <input type="password" *ngIf="!isPasswordDisplayed" [(ngModel)]="currentUser.password" matInput placeholder="Mot de passe">
+        <mat-icon *ngIf="!isPasswordDisplayed" matSuffix (click)="toggleDisplayPassword()">visibility</mat-icon>
+        <mat-icon *ngIf="isPasswordDisplayed" matSuffix (click)="toggleDisplayPassword()">visibility_off</mat-icon>
       </mat-form-field>
     </div>
     <div class="form-group">
       <mat-form-field appearance="fill">
         <mat-label>Confirmer mot de passe</mat-label>
-        <input type="password" matInput placeholder="Confirmer mot de passe">
+        <input type="{{isConfirmPasswordDisplayed ? 'text' : 'password'}}" [(ngModel)]="currentUserConfirmPassword" matInput placeholder="Confirmer mot de passe">
+        <mat-icon matSuffix (click)="toggleDisplayConfirmPassword()">{{isConfirmPasswordDisplayed ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
     </div>
     <div class="form-group">

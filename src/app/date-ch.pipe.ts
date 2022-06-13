@@ -7,7 +7,7 @@ import { Moment } from 'moment';
 export class DateChPipe implements PipeTransform {
 
   transform(moment: Moment): string {
-    return moment.format("dd.MM.yyyy"); 
+    return moment.format("DD.MM.yyyy"); 
   }
 
 }

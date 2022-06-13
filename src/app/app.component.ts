@@ -8,7 +8,8 @@ import { User } from './model/user.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'user-manager';
+
+  
 
   users: Array<User> = [{
     login: 'user1@gm.com',
@@ -26,6 +27,11 @@ export class AppComponent {
 
   isUserFormDisplayed = false;
   currentUser: User = new User();
+  title = 'user-manager';
+  isPasswordDisplayed = false;
+  isConfirmPasswordDisplayed = false;
+
+  currentUserConfirmPassword = '';
 
   addUser(): void {
     this.isUserFormDisplayed = true;
@@ -33,6 +39,10 @@ export class AppComponent {
 
   saveUser(): void {
     console.log(this.currentUser);
+    if(this.currentUserConfirmPassword !== this.currentUser.password) {
+      alert('Le mot de passe saisie ne correspond pas à la confirmation !!');
+      return;
+    }
     this.users.push(this.currentUser);
 
     this.currentUser = new User();
@@ -42,6 +52,31 @@ export class AppComponent {
   cancel(): void {
     this.isUserFormDisplayed = false;
   }
+
+  
+
+  toggleDisplayPassword(): void {
+    // if(!this.isPasswordDisplayed) {
+    //   this.isPasswordDisplayed = true;
+    // } else {
+    //   this.isPasswordDisplayed = false;
+    // }
+
+    this.isPasswordDisplayed = !this.isPasswordDisplayed;
+  }
+
+  toggleDisplayConfirmPassword(): void {
+    this.isConfirmPasswordDisplayed = !this.isConfirmPasswordDisplayed;
+  }
+
+  deleteUser(index: number): void {
+    this.users.splice(index, 1);
+  }
+
+  editUser(index: number, user: User): void {
+    //TODO: à implémenter par Rihab
+  }
+
 
 }
 
